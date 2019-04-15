@@ -1,0 +1,108 @@
+body{
+    background: -webkit-linear-gradient(bottom,rgb(0, 0, 0) 0%,rgb(9, 9, 88) 100%) no-repeat fixed;
+    background: -moz-linear-gradient(bottom,rgb(0, 0, 0) 0%,rgb(9, 9, 88) 100%);
+
+}
+
+h1{
+   color:white;
+   text-align: center;
+   font-size: 50px;
+}
+#box{
+    display:flex;
+    justify-content:center;
+}
+
+#mirrorBreakLazer{
+    background:url(images/milkyWay.jpg);
+    color: white; 
+    border-radius: 20px;
+    font-size: 2em; 
+    height: 600px;
+    width: 600px;
+    border: 20px groove rgb(9, 9, 88) ;
+    margin:30px 15px;
+    
+}
+
+#manu{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    
+}
+#start{
+    background:url(images/milkyWay.jpg) ;
+    color: white; 
+    border-radius: 5px;
+    font-size: 2em; 
+    border: 10px groove rgb(9, 9, 88) ;
+    
+}
+
+#pause{
+    background:url(images/milkyWay.jpg)  ;
+    color: white; 
+    border-radius: 5px;
+    font-size: 2em; 
+    border: 10px groove rgb(9, 9, 88) ;
+}
+
+#next{
+    background:url(images/milkyWay.jpg)  ; 
+    color: white; 
+    border-radius: 5px;
+    font-size: 2em; 
+    border: 10px groove rgb(9, 9, 88) ;
+}
+
+#reset{
+    background:url(images/milkyWay.jpg)  ;
+    color: white; 
+    border-radius: 5px;
+    font-size: 2em; 
+    border: 10px groove rgb(9, 9, 88) ;
+}
+
+#start:hover{
+    background:url(images/milkyWay.jpg) fixed center;
+}
+
+#pause:hover{
+    background:url(images/milkyWay.jpg) fixed center;
+}
+
+#next:hover{
+    background:url(images/milkyWay.jpg) fixed center;
+}
+
+#reset:hover{
+    background:url(images/milkyWay.jpg) fixed center;
+}
+
+#start:active{
+    background:url(images/milkyWay.jpg)  100% ;
+}
+
+#pause:active{
+    background:url(images/milkyWay.jpg)  100% ;
+}
+
+#next:active{
+    background:url(images/milkyWay.jpg)  100% ;
+}
+
+#reset:active{
+    background:url(images/milkyWay.jpg)  100% ;
+}
+
+p{
+    color:white;  
+    text-align: center;
+}
+
+
+
+
