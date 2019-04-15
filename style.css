@@ -33,7 +33,30 @@ h1{
 
     
 }
-#start{
+
+button{
+    background:url(images/milkyWay.jpg)  ;
+    color: white; 
+    border-radius: 5px;
+    font-size: 2em; 
+    border: 10px groove rgb(9, 9, 88) ;
+
+}
+
+button:hover{
+    background:url(images/milkyWay.jpg) fixed center;
+}
+
+button:active{
+    background:url(images/milkyWay.jpg)  100% ;
+}
+
+p{
+    color:white;  
+    text-align: center;
+}
+
+/*#start{
     background:url(images/milkyWay.jpg) ;
     color: white; 
     border-radius: 5px;
@@ -97,12 +120,6 @@ h1{
 #reset:active{
     background:url(images/milkyWay.jpg)  100% ;
 }
-
-p{
-    color:white;  
-    text-align: center;
-}
-
-
+*/
 
 
