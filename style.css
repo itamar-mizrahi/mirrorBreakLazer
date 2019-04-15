@@ -1,6 +1,6 @@
 body{
     background: -webkit-linear-gradient(bottom,rgb(0, 0, 0) 0%,rgb(9, 9, 88) 100%) no-repeat fixed;
-    background: -moz-linear-gradient(bottom,rgb(0, 0, 0) 0%,rgb(9, 9, 88) 100%);
+    background: -moz-linear-gradient(bottom,rgb(0, 0, 0) 0%,rgb(9, 9, 88) 100%) no-repeat fixed;
 
 }
 
