@@ -16,14 +16,11 @@ h1{
 }
 
 #mirrorBreakLazer{
-    background:url(images/milkyWay.jpg);
+    background:url(images/milkyWay.jpg) ;
     color: white; 
     border-radius: 20px;
-    font-size: 2em; 
-    height: 600px;
-    width: 600px;
     border: 20px groove rgb(9, 9, 88) ;
-    margin:30px 15px;   
+    margin:30px 20px;   
 }
 
 #manu{
