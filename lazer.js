@@ -1,9 +1,12 @@
 export class Lazer{
     constructor(){
-         this.lazer;
+         this.lazer=document.getElementById("lazer");
     }
 create(ctx,x,y){   
-    this.lazer=document.getElementById("lazer");
-    ctx.drawImage(lazer,x,y,60,60);
+    ctx.drawImage(this.lazer,x,y,60,60);
     }
+move(ctx,x,y){
+    ctx.drawImage(this.lazer,x,y,60,60);
+
+}
 }
