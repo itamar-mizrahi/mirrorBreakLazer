@@ -43,7 +43,17 @@ window.onload = function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
    // -----------functions-to-buttons:----------------------------------------
-    function nextLevel(){
+    
+   function start(){
+    lazerCor[1]+=y;  
+    lazerObject.create(ctx,lazerCor[0],lazerCor[1]);
+    }
+
+    function stop(){
+        clearInterval(stopId);
+    }
+
+   function nextLevel(){
         if(Object.values(levelsObject)[indexLevel+1]){
             indexLevel++;
         }
@@ -51,22 +61,17 @@ window.onload = function() {
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
     }
+
     function resetLevel(){
+        clearInterval(stopId);
+        clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
     }
-    drawLevel(Object.values(levelsObject)[0]);
 
-    function start(){
-    lazerCor[1]+=y;  
-    lazerObject.create(ctx,lazerCor[0],lazerCor[1]);
-    console.log("test");
-    }
-    function stop(){
-        clearInterval(stopId);
-    }
-
-    document.getElementById("start").onclick = function() {stopId=setInterval(start,2000);};
+    document.getElementById("start").onclick = function() {stopId=setInterval(start,150);};
     document.getElementById("pause").onclick = function() {stop()};
     document.getElementById("next").onclick = function() {nextLevel()};
     document.getElementById("reset").onclick = function() {resetLevel()};
+
+    drawLevel(Object.values(levelsObject)[0]);
 };    
