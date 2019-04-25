@@ -6,6 +6,7 @@ import { Lazer } from './lazer.js';
 import { Levels } from './levels.js';
 window.onload = function() {
     const x=60,y=60;
+    let stopId=0;
     let indexLevel=0;
     let lazerCor=[]
     let lazerObject=new Lazer();
@@ -46,22 +47,26 @@ window.onload = function() {
         if(Object.values(levelsObject)[indexLevel+1]){
             indexLevel++;
         }
+        clearInterval(stopId);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
     }
     function resetLevel(){
         drawLevel(Object.values(levelsObject)[indexLevel]);
     }
-    //levelsObject.drawLevel();
-    //drawLevel(Object.values(Levels)[0]);
     drawLevel(Object.values(levelsObject)[0]);
+
     function start(){
     lazerCor[1]+=y;  
     lazerObject.create(ctx,lazerCor[0],lazerCor[1]);
-    console.log(lazerCor[1]);
+    console.log("test");
     }
-    document.getElementById("start").onclick = function() {requestAnimationFrame(start)};
-    document.getElementById("pause").onclick = function() {};
+    function stop(){
+        clearInterval(stopId);
+    }
+
+    document.getElementById("start").onclick = function() {stopId=setInterval(start,2000);};
+    document.getElementById("pause").onclick = function() {stop()};
     document.getElementById("next").onclick = function() {nextLevel()};
     document.getElementById("reset").onclick = function() {resetLevel()};
 };    

@@ -5,8 +5,4 @@ export class Lazer{
 create(ctx,x,y){   
     ctx.drawImage(this.lazer,x,y,60,60);
     }
-move(ctx,x,y){
-    ctx.drawImage(this.lazer,x,y,60,60);
-
-}
 }
