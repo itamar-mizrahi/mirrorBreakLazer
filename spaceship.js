@@ -1,8 +1,11 @@
+const spaceship= new Image();
+spaceship.src="images/spaceship.png";
 export class Spaceship{
     constructor(){
-         this.spaceship=document.getElementById("spaceship");;
+        this.width=60;
+        this.height=60;   
     }
 create(ctx,x,y){
-    ctx.drawImage(spaceship,x,y,60,60);
+    ctx.drawImage(spaceship,x,y,this.width,this.height);
     }
 }

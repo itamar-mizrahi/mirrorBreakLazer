@@ -4,7 +4,7 @@ import { ObliquelineRight } from './obliquelineRight.js';
 import { Spaceship } from './spaceship.js';
 import { Lazer } from './lazer.js';
 import { Levels } from './levels.js';
-window.onload = function() {
+ window.onload =function() {
     const x=60,y=60;
     let stopId=0;
     let indexLevel=0;
@@ -17,6 +17,7 @@ window.onload = function() {
     let levelsObject=new Levels();
     let canvas = document.getElementById('mirrorBreakLazer');
     let ctx = canvas.getContext('2d');
+    //---------------------------------------------------------------------
     function drawLevel(level) {
         for (let i=0; i<level.length; i++){
             for (let j=0; j<level[i].length; j++){  
@@ -74,4 +75,14 @@ window.onload = function() {
     document.getElementById("reset").onclick = function() {resetLevel()};
 
     drawLevel(Object.values(levelsObject)[0]);
+
+//---------------------------------------------------------------------
+
+/*document.addEventListener("mousedown", changeMirror)
+function changeMirror(event){ 
+    x=event.pageX;
+    y=event.pageY;
+    
+    if(x<=60&&y<=60)
+    */
 };    
