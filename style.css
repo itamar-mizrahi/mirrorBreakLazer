@@ -18,12 +18,12 @@ h1{
 #mirrorBreakLazer{
     background:url(images/milkyWay.jpg) ;
     color: white; 
-    border-radius: 20px;
-    border: 20px groove rgb(9, 9, 88) ;
-    margin:30px 20px;   
+    margin:30px 20px;
+    width: 600px; 
+    height: 600px;  
 }
 
-#manu{
+#menu{
     display:flex;
     flex-direction: column;
     justify-content: space-around;

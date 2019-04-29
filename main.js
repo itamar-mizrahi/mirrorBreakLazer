@@ -8,7 +8,7 @@ import { Levels } from './levels.js';
     const x=60,y=60;
     let stopId=0;
     let indexLevel=0;
-    let lazerCor=[]
+    let lazerY=0,lazerX=0;
     let lazerObject=new Lazer();
     let spaceshipObject=new Spaceship();
     let moonObject=new Moon();
@@ -17,6 +17,7 @@ import { Levels } from './levels.js';
     let levelsObject=new Levels();
     let canvas = document.getElementById('mirrorBreakLazer');
     let ctx = canvas.getContext('2d');
+    let clickX=0,clickY=0;
     //---------------------------------------------------------------------
     function drawLevel(level) {
         for (let i=0; i<level.length; i++){
@@ -25,8 +26,8 @@ import { Levels } from './levels.js';
                     spaceshipObject.create(ctx,j*x,i*y);
                 }else if(level[i][j]===2){
                     lazerObject.create(ctx,j*x,i*y);
-                    lazerCor[0]=j*x;
-                    lazerCor[1]=i*y;
+                    lazerX=j*x;
+                    lazerY=i*y;
                 }
                 else if(level[i][j]===3){
                     moonObject.create(ctx,j*x,i*y); 
@@ -45,9 +46,9 @@ import { Levels } from './levels.js';
     }
    // -----------functions-to-buttons:----------------------------------------
     
-   function start(){
-    lazerCor[1]+=y;  
-    lazerObject.create(ctx,lazerCor[0],lazerCor[1]);
+   function start(){   
+    lazerY+=y;  
+    lazerObject.create(ctx,lazerX,lazerY);
     }
 
     function stop(){
@@ -78,11 +79,18 @@ import { Levels } from './levels.js';
 
 //---------------------------------------------------------------------
 
-/*document.addEventListener("mousedown", changeMirror)
-function changeMirror(event){ 
-    x=event.pageX;
-    y=event.pageY;
+canvas.addEventListener("mousedown",changeMirror,false);
+function changeMirror(evt) {
+    let mousePos = getMousePos(canvas, evt);
+    console.log(Math.floor(mousePos.x) + ',' + Math.floor(mousePos.y));
+    }
+
+    function getMousePos(canvas, evt) {
+        let rect = canvas.getBoundingClientRect();
+        return {
+            x: evt.clientX - rect.left,
+            y: evt.clientY - rect.top,
+        };
+    }
     
-    if(x<=60&&y<=60)
-    */
-};    
+}; 
