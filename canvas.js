@@ -16,8 +16,10 @@ import { Levels } from './levels.js';
     let levelsObject=new Levels();
     let canvas = document.getElementById('mirrorBreakLazer');
     let ctx = canvas.getContext('2d');
-    let stopID=0;
-    let objectsPosition=[]
+    let stopIDStart=0;
+    let stopIDMove=0;
+    let objectsPosition=[];
+    let pressed=0;
     //---------------------------------------------------------------------
     function drawLevel(level) {
         for (let i=0; i<level.length; i++){
@@ -65,24 +67,47 @@ import { Levels } from './levels.js';
     function clearCanvas(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
-   // -----------functions-to-buttons:----------------------------------------
+
+    function move(){
     
-   function start(){   
+        if(objectsPosition[3][6].kind=='obliquelineleft'){
+            lazerX-=x/60;
+            lazerObject.create(ctx,lazerX,lazerY); 
+            stopIDMove=requestAnimationFrame(move);
+         } 
+         else if(objectsPosition[3][6].kind=='obliquelineRight'){
+            lazerX+=x/60;
+            lazerObject.create(ctx,lazerX,lazerY); 
+            stopIDMove=requestAnimationFrame(move);
+          } 
+
+    }
+
+   // -----------functions-to-buttons:----------------------------------------
+
+   function start(){
+    
+    stopIDStart=requestAnimationFrame(start);
+    lazerObject.create(ctx,lazerX,lazerY);  
     lazerY+=y/60;
-    lazerX-=x/60;  
-    lazerObject.create(ctx,lazerX,lazerY);
-    stopID=requestAnimationFrame(start);
+    if (indexLevel==0&&lazerY==objectsPosition[3][6].posY){
+        cancelAnimationFrame(stopIDStart);
+        move();
+        }
+
     }
 
     function stop(){
-        cancelAnimationFrame(stopID);
+        cancelAnimationFrame(stopIDStart);
+        cancelAnimationFrame(stopIDMove);
     }
 
    function nextLevel(){
         if(Object.values(levelsObject)[indexLevel+1]){
             indexLevel++;
         }
-        cancelAnimationFrame(stopID);
+        cancelAnimationFrame(stopIDMove);
+        cancelAnimationFrame(stopIDStart);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
     }
@@ -90,13 +115,15 @@ import { Levels } from './levels.js';
         if(Object.values(levelsObject)[indexLevel-1]){
             indexLevel--;
         }
-        cancelAnimationFrame(stopID);
+        cancelAnimationFrame(stopIDStart);
+        cancelAnimationFrame(stopIDMove);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
     }
 
     function resetLevel(){
-        cancelAnimationFrame(stopID);
+        cancelAnimationFrame(stopIDStart);
+        cancelAnimationFrame(stopIDMove);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
     }
@@ -108,6 +135,7 @@ import { Levels } from './levels.js';
     document.getElementById("reset").onclick = function() {resetLevel()};
 
     drawLevel(Object.values(levelsObject)[0]);
+    //console.log(objectsPosition[3][6]);
     
 
 //---------------------------------------------------------------------
@@ -115,17 +143,17 @@ import { Levels } from './levels.js';
     canvas.addEventListener("mousedown",changeMirror,false);
     function changeMirror(evt) {
         let mousePos = getMousePos(canvas, evt);
-        if(indexLevel==0&&mousePos.x>=objectsPosition[3][2].posX&&mousePos.x<=objectsPosition[3][2].posX+60&&mousePos.y>=objectsPosition[3][2].posY&&mousePos.y<=objectsPosition[3][2].posY+60){
-            console.log(Math.floor(mousePos.x), Math.floor(mousePos.y)); 
-            if(objectsPosition[3][2].kind=='obliquelineleft'){
-               objectsPosition[3][2].kind='obliquelineRight'
-               console.log(objectsPosition[3][2]);
-               obliquelineRightObject.create(ctx,objectsPosition[3][2].posX,objectsPosition[3][2].posY)
+        if(indexLevel==0&&mousePos.x>=objectsPosition[3][6].posX&&mousePos.x<=objectsPosition[3][6].posX+60&&mousePos.y>=objectsPosition[3][2].posY&&mousePos.y<=objectsPosition[3][2].posY+60){
+            //console.log(Math.floor(mousePos.x), Math.floor(mousePos.y)); 
+            if(objectsPosition[3][6].kind=='obliquelineleft'){
+               objectsPosition[3][6].kind='obliquelineRight'
+               //console.log(objectsPosition[3][6]);
+               obliquelineRightObject.create(ctx,objectsPosition[3][6].posX,objectsPosition[3][6].posY)
             } 
-            else if(objectsPosition[3][2].kind=='obliquelineRight'){
-                objectsPosition[3][2].kind='obliquelineleft'
-                console.log(objectsPosition[3][2]);
-                obliquelineleftObject.create(ctx,objectsPosition[3][2].posX,objectsPosition[3][2].posY)
+            else if(objectsPosition[3][6].kind=='obliquelineRight'){
+                objectsPosition[3][6].kind='obliquelineleft'
+                //console.log(objectsPosition[3][6]);
+                obliquelineleftObject.create(ctx,objectsPosition[3][6].posX,objectsPosition[3][6].posY)
              } 
             
         }
