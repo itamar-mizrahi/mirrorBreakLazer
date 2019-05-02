@@ -96,25 +96,39 @@ window.onload = function () {
             let progress = timestamp - startAnim;
             console.log(Math.floor(progress));
             if (Math.floor(progress) > 0 && Math.floor(progress) < 2100) {
-                lazerY += y / 60;
+                lazerY += 1;
                 lazerObject.create(ctx, lazerX, lazerY);
             }
-            if (Math.floor(progress) > 2100) {
+            if (Math.floor(progress) > 2100 &&Math.floor(progress) < 6100) {
                 //if (indexLevel == 0 && lazerY == mirrorsPosLevel1[1].posY && lazerX == mirrorsPosLevel1[1].posX) {
                 //cancelAnimationFrame(stopIDStart);
                 // move();
                 if (mirrorsPosLevel1[1].kind == 'obliquelineleft') {
-                    lazerX -= x / 60;
+                    lazerX -= 1;
 
                     lazerObject.create(ctx, lazerX, lazerY);
                 }
                 else if (mirrorsPosLevel1[1].kind == 'obliquelineRight') {
-                    lazerX += x / 60;
+                    lazerX += 1;
                     lazerObject.create(ctx, lazerX, lazerY);
                 }
+            }
+            if (Math.floor(progress) > 6100 &&Math.floor(progress) < 8100) {
+                //if (indexLevel == 0 && lazerY == mirrorsPosLevel1[1].posY && lazerX == mirrorsPosLevel1[1].posX) {
+                //cancelAnimationFrame(stopIDStart);
+                // move();
+                if (mirrorsPosLevel1[0].kind == 'obliquelineleft') {
+                    lazerY += 1;
 
+                    lazerObject.create(ctx, lazerX, lazerY);
+                }
+                else if (mirrorsPosLevel1[0].kind == 'obliquelineRight') {
+                    lazerY -= 1;
+                    lazerObject.create(ctx, lazerX, lazerY);
+                }
             }
             stopIDStart = requestAnimationFrame(start);
+
 
         }
     }
