@@ -22,6 +22,7 @@ window.onload = function () {
     let objectsPosition = [];
     let pressed = 0;
     let stopTest = 0;
+    let speed = 1;
     //---------------------------------------------------------------------
     function drawLevel(level) {
         for (let i = 0; i < level.length; i++) {
@@ -90,8 +91,8 @@ window.onload = function () {
     let startAnim = 0;
     // -----------functions-to-buttons:----------------------------------------
     function start(timestamp) {
-        if (pressed == 0) { startAnim = 0; pressed = 1 }
-        if (pressed == 1) {
+        /* (pressed == 0) { startAnim = 0; pressed = 1 }
+       if (pressed == 1) {
             if (!startAnim) startAnim = timestamp;
             let progress = timestamp - startAnim;
             console.log(Math.floor(progress));
@@ -127,10 +128,77 @@ window.onload = function () {
                     lazerObject.create(ctx, lazerX, lazerY);
                 }
             }
+            
             stopIDStart = requestAnimationFrame(start);
-
+        }
+        */
+        if (lazerY < mirrorsPosLevel1[1].posY && lazerX == mirrorsPosLevel1[1].posX) {
+            lazerY += speed;
+            lazerObject.create(ctx, lazerX, lazerY);
+            console.log(lazerX, lazerY);
 
         }
+        if (lazerY == mirrorsPosLevel1[1].posY && lazerX > mirrorsPosLevel1[0].posX) {
+            if (mirrorsPosLevel1[1].kind == 'obliquelineleft') {
+                lazerX -= speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+            else if (mirrorsPosLevel1[1].kind == 'obliquelineRight') {
+                lazerX += speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+        }
+        if (lazerX == mirrorsPosLevel1[0].posX && lazerY < mirrorsPosLevel1[2].posY) {
+            if (mirrorsPosLevel1[0].kind == 'obliquelineleft') {
+                lazerY += speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+            else if (mirrorsPosLevel1[0].kind == 'obliquelineRight') {
+                lazerY -= speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+        }
+        if (lazerY == mirrorsPosLevel1[2].posY && lazerX < mirrorsPosLevel1[3].posX) {
+            if (mirrorsPosLevel1[2].kind == 'obliquelineleft') {
+                lazerX -= speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+            else if (mirrorsPosLevel1[2].kind == 'obliquelineRight') {
+                lazerX += speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+        }
+        if (lazerX == mirrorsPosLevel1[3].posX && lazerY < mirrorsPosLevel1[4].posY && lazerY > mirrorsPosLevel1[1].posY) {
+            if (mirrorsPosLevel1[3].kind == 'obliquelineleft') {
+                lazerY -= speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+            else if (mirrorsPosLevel1[3].kind == 'obliquelineRight') {
+                lazerY += speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+        }
+        if (lazerY == mirrorsPosLevel1[4].posY && lazerX > 0) {
+            if (mirrorsPosLevel1[4].kind == 'obliquelineleft') {
+                lazerX -= speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+            else if (mirrorsPosLevel1[4].kind == 'obliquelineRight') {
+                lazerX += speed;
+                lazerObject.create(ctx, lazerX, lazerY);
+                console.log(lazerX, lazerY);
+            }
+        }
+        stopIDStart = requestAnimationFrame(start);
     }
 
     function stop() {
@@ -190,7 +258,7 @@ window.onload = function () {
             objectsPosition[5][2],
             objectsPosition[5][6],
             objectsPosition[7][6]]
-            pressed = 0;
+        pressed = 0;
 
     }
 
@@ -199,6 +267,9 @@ window.onload = function () {
     document.getElementById("next").onclick = function () { nextLevel() };
     document.getElementById("previous").onclick = function () { PreviousLevel() };
     document.getElementById("reset").onclick = function () { resetLevel() };
+    document.getElementById("speed1").onclick = function () { speed = 1 };
+    document.getElementById("speed2").onclick = function () { speed = 2 };
+    document.getElementById("speed3").onclick = function () { speed = 5 };
 
     drawLevel(Object.values(levelsObject)[0]);
 

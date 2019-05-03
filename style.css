@@ -34,6 +34,8 @@ button{
     border-radius: 5px;
     font-size: 2em; 
     border: 10px groove rgb(9, 9, 88) ;
+    
+    
 }
 
 button:hover{
@@ -42,6 +44,10 @@ button:hover{
 
 button:active{
     background:url(images/milkyWay.jpg)  100% ;
+}
+
+#speed{
+    text-align: center;
 }
 
 p{
