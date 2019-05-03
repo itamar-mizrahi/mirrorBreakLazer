@@ -199,13 +199,16 @@ window.onload = function () {
                     console.log(lazerX, lazerY);
                 }
             }
-            stopIDStart = requestAnimationFrame(start);
+            if (lazerX == objectsPosition[7][0].posX+60 && lazerY == objectsPosition[7][0].posY) {nextLevel()}
+
+            else if(lazerX<60||lazerY<60||lazerX>canvas.width-120||lazerY>canvas.height-120) {resetLevel()}
+            
+            else{stopIDStart = requestAnimationFrame(start);}
         }
+        
     }
     function stop() {
         cancelAnimationFrame(stopIDStart);
-        cancelAnimationFrame(stopIDMove);
-        cancelAnimationFrame(stopTest);
     }
 
     function nextLevel() {
@@ -213,10 +216,7 @@ window.onload = function () {
             indexLevel++;
             pressed = 0;
         }
-
-        cancelAnimationFrame(stopIDMove);
         cancelAnimationFrame(stopIDStart);
-        cancelAnimationFrame(stopTest);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
         mirrorsPosLevel1 = [
@@ -232,10 +232,7 @@ window.onload = function () {
             indexLevel--;
             pressed = 0;
         }
-
         cancelAnimationFrame(stopIDStart);
-        cancelAnimationFrame(stopIDMove);
-        cancelAnimationFrame(stopTest);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
         mirrorsPosLevel1 = [
@@ -249,8 +246,6 @@ window.onload = function () {
 
     function resetLevel() {
         cancelAnimationFrame(stopIDStart);
-        cancelAnimationFrame(stopIDMove);
-        cancelAnimationFrame(stopTest);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
         mirrorsPosLevel1 = [
