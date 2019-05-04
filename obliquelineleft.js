@@ -5,7 +5,7 @@ export class Obliquelineleft{
         this.width=60;
         this.height=60;
     }
-create(ctx,x,y){   
+create(ctx,x,y){  
     ctx.drawImage(obliquelineleft,x,y,this.width,this.height);
     }
 }
