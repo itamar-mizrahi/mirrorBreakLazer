@@ -1,11 +1,14 @@
-const lazer= new Image();
 export class Lazer{
     constructor(){
         this.width=60;
-        this.height=60;
+        this.height=60;  
     }
-create(ctx,x,y,speed){ 
-    ctx.fillStyle = `rgba(255,0,0,${speed/100})`;
+create(ctx,x,y,opacity){ 
+    
+    ctx.fillStyle = `rgba(${r()},${r(128)},${r(128)},${opacity/100})`;
     ctx.fillRect(x,y,this.width,this.height);  
     }
+}
+function r(num=255){
+     return Math.round(Math.random()*num)
 }
