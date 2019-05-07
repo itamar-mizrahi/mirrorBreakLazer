@@ -84,6 +84,7 @@ window.onload = function () {
                         speedY = speed;
                         console.log(lazerX, lazerY);
                     }
+                    mirrorReact(mirrorsPosLevel1)
                 }
                 if (indexLevel == 1) {
                     if (lazerX == objectsPosition[9][7].posX && lazerY == objectsPosition[9][7].posY){
@@ -95,93 +96,16 @@ window.onload = function () {
                         speedX = -speed;
                         console.log(lazerX, lazerY);
                     }
+                    mirrorReact(mirrorsPosLevel2)
                 }
                 if(lazerX<0||lazerY<0||lazerX>canvas.width||lazerY>canvas.height){
                     resetLevel();
                     return;
                 }
-                if(indexLevel==0){
-                    for (let i=0; i<mirrorsPosLevel1.length;i++){
-                        if (mirrorsPosLevel1[i].posX==lazerX&&mirrorsPosLevel1[i].posY==lazerY){
-                            if (mirrorsPosLevel1[i].kind == 'obliquelineleft'&&speedX==0&&speedY==-speed) {
-                                speedX = speed;
-                                speedY = 0;   
-                            } 
-                            else if (mirrorsPosLevel1[i].kind == 'obliquelineRight'&&speedX==0&&speedY==-speed) {
-                                speedX = -speed;
-                                speedY = 0;
-                            }
-                            else if (mirrorsPosLevel1[i].kind == 'obliquelineleft'&&speedX==0&&speedY==speed) {
-                                speedX = -speed;
-                                speedY = 0;
-                            } 
-                            else if (mirrorsPosLevel1[i].kind == 'obliquelineRight'&&speedX==0&&speedY==speed) {
-                                speedX = speed;
-                                speedY = 0;
-                            }
-                            else if (mirrorsPosLevel1[i].kind == 'obliquelineleft'&&speedY==0&&speedX==-speed) {
-                                speedY = speed;
-                                speedX = 0;
-                            }
-                            else if (mirrorsPosLevel1[i].kind == 'obliquelineRight'&&speedY==0&&speedX==speed) {
-                                speedY = speed;
-                                speedX = 0;
-                            }
-                            else if (mirrorsPosLevel1[i].kind == 'obliquelineleft'&&speedY==0&&speedX==speed) {
-                                speedY = -speed;
-                                speedX = 0;
-                            }
-                            else if (mirrorsPosLevel1[i].kind == 'obliquelineRight'&&speedY==0&&speedX==-speed) {
-                                speedY = -speed;
-                                speedX = 0;
-                            }
-                        }  
-                    }
-                }
-                if(indexLevel==1){
-                    for (let i=0; i<mirrorsPosLevel2.length;i++){
-                        if (mirrorsPosLevel2[i].posX==lazerX&&mirrorsPosLevel2[i].posY==lazerY){
-                            if (mirrorsPosLevel2[i].kind == 'obliquelineleft'&&speedX==0&&speedY==-speed) {
-                                speedX = speed;
-                                speedY = 0;   
-                            } 
-                            else if (mirrorsPosLevel2[i].kind == 'obliquelineRight'&&speedX==0&&speedY==-speed) {
-                                speedX = -speed;
-                                speedY = 0;
-                            }
-                            else if (mirrorsPosLevel2[i].kind == 'obliquelineleft'&&speedX==0&&speedY==speed) {
-                                speedX = -speed;
-                                speedY = 0;
-                            } 
-                            else if (mirrorsPosLevel2[i].kind == 'obliquelineRight'&&speedX==0&&speedY==speed) {
-                                speedX = speed;
-                                speedY = 0;
-                            }
-                            else if (mirrorsPosLevel2[i].kind == 'obliquelineleft'&&speedY==0&&speedX==-speed) {
-                                speedY = speed;
-                                speedX = 0;
-                            }
-                            else if (mirrorsPosLevel2[i].kind == 'obliquelineRight'&&speedY==0&&speedX==speed) {
-                                speedY = speed;
-                                speedX = 0;
-                            }
-                            else if (mirrorsPosLevel2[i].kind == 'obliquelineleft'&&speedY==0&&speedX==speed) {
-                                speedY = -speed;
-                                speedX = 0;
-                            }
-                            else if (mirrorsPosLevel2[i].kind == 'obliquelineRight'&&speedY==0&&speedX==-speed) {
-                                speedY = -speed;
-                                speedX = 0;
-                            }
-                        }  
-                    }
-                }
-            
                 lazerY += speedY;
                 lazerX += speedX;
                 lazerObject.create(ctx, lazerX, lazerY,speed*2);
-                stopIDStart = requestAnimationFrame(start);
-           
+                stopIDStart = requestAnimationFrame(start);   
     }
     function stop() {
         cancelAnimationFrame(stopIDStart);
@@ -196,15 +120,14 @@ window.onload = function () {
         cancelAnimationFrame(stopIDStart);
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
-
         if(indexLevel==1){
-        mirrorsPosLevel2 = [
-            objectsPosition[2][2],
-            objectsPosition[2][5],
-            objectsPosition[4][5],
-            objectsPosition[7][2],
-            objectsPosition[7][7]
-        ];
+            mirrorsPosLevel2 = [
+                objectsPosition[2][2],
+                objectsPosition[2][5],
+                objectsPosition[4][5],
+                objectsPosition[7][2],
+                objectsPosition[7][7]
+            ];
         }
         pressed=0;
     }
@@ -261,7 +184,7 @@ window.onload = function () {
         }  
         pressed=0;
     }
-
+    canvas.addEventListener("mousedown", changeMirror, false);
     document.getElementById("start").onclick = function () {if (pressed==0){pressed=1; start()} };
     document.getElementById("pause").onclick = function () { stop() };
     document.getElementById("next").onclick = function () { nextLevel() };
@@ -286,7 +209,7 @@ window.onload = function () {
         objectsPosition[7][2],
         objectsPosition[7][7]
     ];
-    canvas.addEventListener("mousedown", changeMirror, false);
+    
     function changeMirror(evt) {
         let mousePos = getMousePos(canvas, evt);
         if (indexLevel==0){
@@ -331,7 +254,44 @@ window.onload = function () {
             y: evt.clientY - rect.top,
         };
     }
-
+    function mirrorReact(mirrorsPosLevel){
+        for (let i=0; i<mirrorsPosLevel.length;i++){
+            if (mirrorsPosLevel[i].posX==lazerX&&mirrorsPosLevel[i].posY==lazerY){
+                if (mirrorsPosLevel[i].kind == 'obliquelineleft'&&speedX==0&&speedY==-speed) {
+                    speedX = speed;
+                    speedY = 0;   
+                } 
+                else if (mirrorsPosLevel[i].kind == 'obliquelineRight'&&speedX==0&&speedY==-speed) {
+                    speedX = -speed;
+                    speedY = 0;
+                }
+                else if (mirrorsPosLevel[i].kind == 'obliquelineleft'&&speedX==0&&speedY==speed) {
+                    speedX = -speed;
+                    speedY = 0;
+                } 
+                else if (mirrorsPosLevel[i].kind == 'obliquelineRight'&&speedX==0&&speedY==speed) {
+                    speedX = speed;
+                    speedY = 0;
+                }
+                else if (mirrorsPosLevel[i].kind == 'obliquelineleft'&&speedY==0&&speedX==-speed) {
+                    speedY = speed;
+                    speedX = 0;
+                }
+                else if (mirrorsPosLevel[i].kind == 'obliquelineRight'&&speedY==0&&speedX==speed) {
+                    speedY = speed;
+                    speedX = 0;
+                }
+                else if (mirrorsPosLevel[i].kind == 'obliquelineleft'&&speedY==0&&speedX==speed) {
+                    speedY = -speed;
+                    speedX = 0;
+                }
+                else if (mirrorsPosLevel[i].kind == 'obliquelineRight'&&speedY==0&&speedX==-speed) {
+                    speedY = -speed;
+                    speedX = 0;
+                }
+            }  
+        }
+    }
 };
 //--------------------------------------draft--------------------------------------
         /* (pressed == 0) { startAnim = 0; pressed = 1 }
