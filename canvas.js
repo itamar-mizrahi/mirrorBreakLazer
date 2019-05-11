@@ -128,10 +128,6 @@ window.onload = function () {
                 }
             }
         }
-        console.log(mirrorsPosLevel1);
-        console.log(lazerPosLevel1);
-        console.log(spaceshipPosLevel1);
-        console.log(planetsPosLevel1);
     }
 
     function clearCanvas() {
@@ -148,7 +144,6 @@ window.onload = function () {
             if (lazerY == lazerPosLevel1[0].posY && lazerX == lazerPosLevel1[0].posX) {
                 speedX = 0;
                 speedY = speed;
-                console.log(lazerX, lazerY);
             }
             mirrorReact(mirrorsPosLevel1);
             for (let i = 0; i < planetsPosLevel1.length; i++) {
@@ -167,7 +162,6 @@ window.onload = function () {
             if (lazerY == lazerPosLevel2[0].posY && lazerX == lazerPosLevel2[0].posX) {
                 speedY = 0;
                 speedX = -speed;
-                console.log(lazerX, lazerY);
             }
             mirrorReact(mirrorsPosLevel2);
             for (let i = 0; i < planetsPosLevel2.length; i++) {
@@ -185,7 +179,6 @@ window.onload = function () {
             if (lazerY == lazerPosLevel3[0].posY && lazerX == lazerPosLevel3[0].posX) {
                 speedY = 0;
                 speedX = speed;
-                console.log(lazerX, lazerY);
             }
             mirrorReact(mirrorsPosLevel3);
             for (let i = 0; i < planetsPosLevel3.length; i++) {
@@ -312,15 +305,12 @@ window.onload = function () {
     function mouseReactMirrorPos(mirrorsPosLevel, mousePos) {
         for (let i = 0; i < mirrorsPosLevel.length; i++) {
             if (mousePos.x >= mirrorsPosLevel[i].posX && mousePos.x <= mirrorsPosLevel[i].posX + 60 && mousePos.y >= mirrorsPosLevel[i].posY && mousePos.y <= mirrorsPosLevel[i].posY + 60) {
-                console.log(Math.floor(mousePos.x), Math.floor(mousePos.y));
                 if (mirrorsPosLevel[i].kind == 'obliquelineleft') {
                     mirrorsPosLevel[i].kind = 'obliquelineRight';
-                    console.log(mirrorsPosLevel[i].kind);
                     obliquelineRightObject.create(ctx, mirrorsPosLevel[i].posX, mirrorsPosLevel[i].posY);
                 }
                 else if (mirrorsPosLevel[i].kind == 'obliquelineRight') {
                     mirrorsPosLevel[i].kind = 'obliquelineleft'
-                    console.log(mirrorsPosLevel[i].kind);
                     obliquelineleftObject.create(ctx, mirrorsPosLevel[i].posX, mirrorsPosLevel[i].posY);
                 }
             }
