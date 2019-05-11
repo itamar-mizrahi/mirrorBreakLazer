@@ -26,7 +26,7 @@ window.onload = function () {
     let planetsPosLevel1 = [], planetsPosLevel2 = [], planetsPosLevel3 = [];
     let lazerPosLevel1 = [], lazerPosLevel2 = [], lazerPosLevel3 = [];
     let spaceshipPosLevel1 = [], spaceshipPosLevel2 = [], spaceshipPosLevel3 = [];
-    let startAnim = 0;
+    let sizeOfFont=60;
     //---------------------------------------------------------------------
     function drawLevel(level) {
         mirrorsPosLevel1 = [], mirrorsPosLevel2 = [], mirrorsPosLevel3 = [];
@@ -142,7 +142,7 @@ window.onload = function () {
     function start() {
         if (indexLevel == 0) {
             if (lazerX == spaceshipPosLevel1[1].posX + 60 && lazerY == spaceshipPosLevel1[1].posY) {
-                nextLevel();
+                youWon();
                 return;
             }
             if (lazerY == lazerPosLevel1[0].posY && lazerX == lazerPosLevel1[0].posX) {
@@ -153,8 +153,7 @@ window.onload = function () {
             mirrorReact(mirrorsPosLevel1);
             for (let i = 0; i < planetsPosLevel1.length; i++) {
                 if (lazerX == planetsPosLevel1[i].posX && lazerY == planetsPosLevel1[i].posY) {
-                    cancelAnimationFrame(stopIDStart);
-                    tryagain();
+                    tryAgain();
                     return;
                 }
             }
@@ -162,7 +161,7 @@ window.onload = function () {
         }
         if (indexLevel == 1) {
             if (lazerX == spaceshipPosLevel2[1].posX && lazerY == spaceshipPosLevel2[1].posY) {
-                nextLevel();
+                youWon();
                 return;
             }
             if (lazerY == lazerPosLevel2[0].posY && lazerX == lazerPosLevel2[0].posX) {
@@ -173,15 +172,14 @@ window.onload = function () {
             mirrorReact(mirrorsPosLevel2);
             for (let i = 0; i < planetsPosLevel2.length; i++) {
                 if (lazerX == planetsPosLevel2[i].posX && lazerY == planetsPosLevel2[i].posY) {
-                    cancelAnimationFrame(stopIDStart);
-                    tryagain();
+                    tryAgain();
                     return;
                 }
             }
         }
         if (indexLevel == 2) {
             if (lazerX == spaceshipPosLevel3[0].posX && lazerY == spaceshipPosLevel3[0].posY) {
-                nextLevel();
+                youWon();
                 return;
             }
             if (lazerY == lazerPosLevel3[0].posY && lazerX == lazerPosLevel3[0].posX) {
@@ -192,15 +190,13 @@ window.onload = function () {
             mirrorReact(mirrorsPosLevel3);
             for (let i = 0; i < planetsPosLevel3.length; i++) {
                 if (lazerX == planetsPosLevel3[i].posX && lazerY == planetsPosLevel3[i].posY) {
-                    cancelAnimationFrame(stopIDStart);
-                    tryagain();
+                    tryAgain();
                     return;
                 }
             }
         }
         if (lazerX < 0 || lazerY < 0 || lazerX > canvas.width || lazerY > canvas.height) {
-            cancelAnimationFrame(stopIDStart);
-            tryagain();
+            tryAgain();
             return;
         }
         lazerY += speedY;
@@ -239,6 +235,7 @@ window.onload = function () {
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
         pressed = 0;
+        console.log(0);
     }
 
     canvas.addEventListener("mousedown", changeMirror, false);
@@ -330,12 +327,34 @@ window.onload = function () {
             }
         }
     }
-    function tryagain() {
+    function tryAgain() {
         clearCanvas();
-        ctx.font = "100px Comic Sans MS";
+        ctx.font = `${sizeOfFont}px Comic Sans MS`;
         ctx.fillStyle = "red";
         ctx.textAlign = "center";
         ctx.fillText("try again", canvas.width / 2, canvas.height / 2);
+        sizeOfFont++;
+        if(sizeOfFont>120) {
+            sizeOfFont=60;
+            resetLevel();
+            return;
+        }
+        requestAnimationFrame(tryAgain);
+    }
+    
+    function youWon() {
+        clearCanvas();
+        ctx.font = `${sizeOfFont}px Comic Sans MS`;
+        ctx.fillStyle = "green";
+        ctx.textAlign = "center";
+        ctx.fillText("You Won!", canvas.width / 2, canvas.height / 2);
+        sizeOfFont++;
+        if(sizeOfFont>120) {
+            sizeOfFont=60;
+            nextLevel();
+            return;
+        }
+        requestAnimationFrame(youWon);  
     }
 };
 
