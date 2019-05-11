@@ -235,7 +235,6 @@ window.onload = function () {
         clearCanvas();
         drawLevel(Object.values(levelsObject)[indexLevel]);
         pressed = 0;
-        console.log(0);
     }
 
     canvas.addEventListener("mousedown", changeMirror, false);
@@ -341,7 +340,7 @@ window.onload = function () {
         }
         requestAnimationFrame(tryAgain);
     }
-    
+
     function youWon() {
         clearCanvas();
         ctx.font = `${sizeOfFont}px Comic Sans MS`;
