@@ -22,17 +22,19 @@ window.onload = function () {
     let speedY = 0, speedX = 0;
     let speed = 5;
     let pressed = 0;
-    let mirrorsPosLevel1 = [], mirrorsPosLevel2 = [], mirrorsPosLevel3 = [];
-    let planetsPosLevel1 = [], planetsPosLevel2 = [], planetsPosLevel3 = [];
-    let lazerPosLevel1 = [], lazerPosLevel2 = [], lazerPosLevel3 = [];
-    let spaceshipPosLevel1 = [], spaceshipPosLevel2 = [], spaceshipPosLevel3 = [];
+    let mirrorsPosLevel1 = [], mirrorsPosLevel2 = [], mirrorsPosLevel3 = [],mirrorsPosLevel4 = [];
+    let planetsPosLevel1 = [], planetsPosLevel2 = [], planetsPosLevel3 = [],planetsPosLevel4 = [];
+    let lazerPosLevel1 = [], lazerPosLevel2 = [], lazerPosLevel3 = [],lazerPosLevel4 = [];
+    let spaceshipPosLevel1 = [], spaceshipPosLevel2 = [], spaceshipPosLevel3 = [], spaceshipPosLevel4 = [];
     let sizeOfFont=60;
+    let mousePos=0;
+    let rect=0;
     //---------------------------------------------------------------------
     function drawLevel(level) {
-        mirrorsPosLevel1 = [], mirrorsPosLevel2 = [], mirrorsPosLevel3 = [];
-        planetsPosLevel1 = [], planetsPosLevel2 = [], planetsPosLevel3 = [];
-        lazerPosLevel1 = [], lazerPosLevel2 = [], lazerPosLevel3 = [];
-        spaceshipPosLevel1 = [], spaceshipPosLevel2 = [], spaceshipPosLevel3 = [];
+         mirrorsPosLevel1 = [], mirrorsPosLevel2 = [], mirrorsPosLevel3 = [],mirrorsPosLevel4 = [];
+         planetsPosLevel1 = [], planetsPosLevel2 = [], planetsPosLevel3 = [],planetsPosLevel4 = [];
+         lazerPosLevel1 = [], lazerPosLevel2 = [], lazerPosLevel3 = [],lazerPosLevel4 = [];
+         spaceshipPosLevel1 = [], spaceshipPosLevel2 = [], spaceshipPosLevel3 = [], spaceshipPosLevel4 = [];
 
         for (let i = 0; i < level.length; i++) {
             objectsPosition[i] = []
@@ -53,6 +55,9 @@ window.onload = function () {
                     else if (indexLevel == 2) {
                         spaceshipPosLevel3.push(objectsPosition[i][j]);
                     }
+                    else if (indexLevel == 3) {
+                        spaceshipPosLevel4.push(objectsPosition[i][j]);
+                    }
                 } else if (level[i][j] === 2) {
                     lazerObject.create(ctx, j * x, i * y, speed * 5);
                     lazerX = j * x;
@@ -71,6 +76,9 @@ window.onload = function () {
                     else if (indexLevel == 2) {
                         lazerPosLevel3.push(objectsPosition[i][j]);
                     }
+                    else if (indexLevel == 3) {
+                        lazerPosLevel4.push(objectsPosition[i][j]);
+                    }
                 }
                 else if (level[i][j] === 3) {
                     plantObject.create(ctx, j * x, i * y);
@@ -87,6 +95,9 @@ window.onload = function () {
                     }
                     else if (indexLevel == 2) {
                         planetsPosLevel3.push(objectsPosition[i][j]);
+                    }
+                    else if (indexLevel == 3) {
+                        planetsPosLevel4.push(objectsPosition[i][j]);
                     }
 
                 }
@@ -107,6 +118,9 @@ window.onload = function () {
                     else if (indexLevel == 2) {
                         mirrorsPosLevel3.push(objectsPosition[i][j])
                     }
+                    else if (indexLevel == 3) {
+                        mirrorsPosLevel4.push(objectsPosition[i][j])
+                    }
                 }
                 else if (level[i][j] === 5) {
                     obliquelineleftObject.create(ctx, j * x, i * y);
@@ -125,6 +139,9 @@ window.onload = function () {
                     else if (indexLevel == 2) {
                         mirrorsPosLevel3.push(objectsPosition[i][j])
                     }
+                    else if (indexLevel == 3) {
+                        mirrorsPosLevel4.push(objectsPosition[i][j])
+                    }
                 }
             }
         }
@@ -137,7 +154,7 @@ window.onload = function () {
     // -----------functions-to-buttons:---------------------------------------------------------------
     function start() {
         if (indexLevel == 0) {
-            if (lazerX == spaceshipPosLevel1[1].posX + 60 && lazerY == spaceshipPosLevel1[1].posY) {
+            if (lazerX == spaceshipPosLevel1[1].posX && lazerY == spaceshipPosLevel1[1].posY) {
                 youWon();
                 return;
             }
@@ -188,6 +205,24 @@ window.onload = function () {
                 }
             }
         }
+        if (indexLevel == 3) {
+            if (lazerX == spaceshipPosLevel4[0].posX && lazerY == spaceshipPosLevel4[0].posY) {
+                youWon();
+                return;
+            }
+            if (lazerY == lazerPosLevel4[0].posY && lazerX == lazerPosLevel4[0].posX) {
+                speedY = speed;
+                speedX = 0;
+            }
+            mirrorReact(mirrorsPosLevel4);
+            for (let i = 0; i < planetsPosLevel4.length; i++) {
+                if (lazerX == planetsPosLevel4[i].posX && lazerY == planetsPosLevel4[i].posY) {
+                    tryAgain();
+                    return;
+                }
+            }
+        }
+        
         if (lazerX < 0 || lazerY < 0 || lazerX > canvas.width || lazerY > canvas.height) {
             tryAgain();
             return;
@@ -242,21 +277,24 @@ window.onload = function () {
     drawLevel(Object.values(levelsObject)[0]);
     //-----------------------------------------------------------------------------------------
     function changeMirror(evt) {
-        let mousePos = getMousePos(canvas, evt);
+        mousePos = getMousePos(evt);
         if (indexLevel == 0) {
-            mouseReactMirrorPos(mirrorsPosLevel1, mousePos)
+            mouseReactMirrorPos(mirrorsPosLevel1);
         }
         if (indexLevel == 1) {
-            mouseReactMirrorPos(mirrorsPosLevel2, mousePos);
+            mouseReactMirrorPos(mirrorsPosLevel2);
         }
         if (indexLevel == 2) {
-            mouseReactMirrorPos(mirrorsPosLevel3, mousePos);
+            mouseReactMirrorPos(mirrorsPosLevel3);
+        }
+        if (indexLevel == 3) {
+            mouseReactMirrorPos(mirrorsPosLevel4);
         }
 
     }
 
-    function getMousePos(canvas, evt) {
-        let rect = canvas.getBoundingClientRect();
+    function getMousePos(evt) {
+        rect = canvas.getBoundingClientRect();
         return {
             x: evt.clientX - rect.left,
             y: evt.clientY - rect.top,
@@ -302,7 +340,7 @@ window.onload = function () {
         }
     }
 
-    function mouseReactMirrorPos(mirrorsPosLevel, mousePos) {
+    function mouseReactMirrorPos(mirrorsPosLevel) {
         for (let i = 0; i < mirrorsPosLevel.length; i++) {
             if (mousePos.x >= mirrorsPosLevel[i].posX && mousePos.x <= mirrorsPosLevel[i].posX + 60 && mousePos.y >= mirrorsPosLevel[i].posY && mousePos.y <= mirrorsPosLevel[i].posY + 60) {
                 if (mirrorsPosLevel[i].kind == 'obliquelineleft') {
