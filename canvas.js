@@ -385,3 +385,8 @@ window.onload = function () {
     }
 };
 
+//TODO:add moving obstacles and targets and mirrors.
+//TODO:add 360 degrees at first with 2d , can add oblique movement to 
+//add more options to level building.
+ 
+
