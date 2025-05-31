@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Game Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background: #000; color: #fff; }
+        .test { margin: 10px 0; padding: 10px; border: 1px solid #333; background: #111; }
+        .pass { border-color: green; }
+        .fail { border-color: red; }
+    </style>
+</head>
+<body>
+    <h1>Mirror Lazer Break - Test Page</h1>
+    <div id="tests"></div>
+    
+    <script>
+        const tests = [];
+        
+        function addTest(name, condition) {
+            tests.push({ name, passed: condition });
+        }
+        
+        // Test if all required files are accessible
+        fetch('./canvas.js').then(r => addTest('canvas.js loaded', r.ok)).catch(() => addTest('canvas.js loaded', false));
+        fetch('./levels.js').then(r => addTest('levels.js loaded', r.ok)).catch(() => addTest('levels.js loaded', false));
+        fetch('./style.css').then(r => addTest('style.css loaded', r.ok)).catch(() => addTest('style.css loaded', false));
+        
+        // Test basic game elements
+        setTimeout(() => {
+            const testsDiv = document.getElementById('tests');
+            tests.forEach(test => {
+                const div = document.createElement('div');
+                div.className = `test ${test.passed ? 'pass' : 'fail'}`;
+                div.innerHTML = `${test.name}: ${test.passed ? 'PASS' : 'FAIL'}`;
+                testsDiv.appendChild(div);
+            });
+            
+            // Add link to main game
+            const link = document.createElement('div');
+            link.innerHTML = '<br><a href="index.html" style="color: #00ff88; font-size: 18px;">🎮 Launch Game</a>';
+            testsDiv.appendChild(link);
+        }, 1000);
+    </script>
+</body>
+</html>
