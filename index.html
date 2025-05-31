@@ -1,105 +1,126 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Mirror lazer break</title>
+  <meta name="description" content="משחק שבירת לייזר במראות - הדרכו את הלייזר למטרה">
+  <title>Mirror Lazer Break - משחק שבירת לייזר במראות</title>
   <link rel="icon" type="image/png" href="images/spaceship.png">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 
 <body>
-  <h1>Mirror Lazer Break</h1>
+  <header>
+    <div class="header-controls">
+      <div class="language-selector">
+        <label for="languageSelect" data-key="language">שפה:</label>
+        <select id="languageSelect" aria-label="בחר שפה">
+          <option value="he" data-key="hebrew">עברית</option>
+          <option value="en" data-key="english">English</option>
+        </select>
+      </div>
+    </div>
+    <h1 data-key="title">Mirror Lazer Break - שבירת לייזר במראות</h1>
+  </header>
   
-  <!-- Game Stats Display -->
-  <div id="gameStats">
-    <div class="stat">
-      <span class="label">Score:</span>
-      <span id="score" class="value">0</span>
-    </div>
-    <div class="stat">
-      <span class="label">Lives:</span>
-      <span id="lives" class="value">3</span>
-    </div>
-    <div class="stat">
-      <span class="label">Time:</span>
-      <span id="time" class="value">0s</span>
-    </div>
-    <div class="stat">
-      <span class="label">Level:</span>
-      <span id="level" class="value">1</span>
-    </div>
-    <div class="stat">
-      <span class="label">Streak:</span>
-      <span id="streak" class="value">0</span>
-    </div>
-  </div>
+  <main>
+    <!-- Game Stats Display -->
+    <section id="gameStats" aria-label="סטטיסטיקות המשחק">
+      <div class="stat">
+        <span class="label" data-key="score">ניקוד:</span>
+        <span id="score" class="value">0</span>
+      </div>
+      <div class="stat">
+        <span class="label" data-key="lives">חיים:</span>
+        <span id="lives" class="value">3</span>
+      </div>
+      <div class="stat">
+        <span class="label" data-key="time">זמן:</span>
+        <span id="time" class="value">0s</span>
+      </div>
+      <div class="stat">
+        <span class="label" data-key="level">שלב:</span>
+        <span id="level" class="value">1</span>
+      </div>
+      <div class="stat">
+        <span class="label" data-key="streak">רצף:</span>
+        <span id="streak" class="value">0</span>
+      </div>
+    </section>
 
-  <div id="box">
-    <canvas id="mirrorBreakLazer" height="600px" width="600px">
-    </canvas>
-    <div id="menu">
-      <button id="start">Start</button>
-      <button id="pause">Stop</button>
-      <button id="next">Skip Level</button>
-      <button id="previous">Previous Level</button>
-      <button id="reset">Reset Level</button>
-      <button id="instructions">Instructions</button>
-      <button id="soundToggle">🔊 Sound On</button>
-    </div>
-    <div id="levelSelector">
-      <label for="levelSelect">Quick Level Select:</label>
-      <select id="levelSelect">
-        <option value="0">Level 1</option>
-        <option value="1">Level 2</option>
-        <option value="2">Level 3</option>
-        <option value="3">Level 4</option>
-        <option value="4">Level 5</option>
-        <option value="5">Level 6</option>
-        <option value="6">Level 7</option>
-        <option value="7">Level 8</option>
-      </select>
-    </div>
-  </div>
-  <div id="speed">
-    <button id="speed1">Slow</button>
-    <button id="speed2">Medium</button>
-    <button id="speed3">Fast</button>
-  </div>
+    <section id="box">
+      <div class="game-layout">
+        <nav id="menu-left" class="side-menu" aria-label="תפריט שמאל">
+          <button id="start" aria-label="התחל משחק" data-key="start">התחל</button>
+          <button id="pause" aria-label="עצור משחק" data-key="pause">עצור</button>
+          <button id="reset" aria-label="אפס שלב" data-key="reset">אפס שלב</button>
+          <button id="instructions" aria-label="הוראות המשחק" data-key="instructions">הוראות</button>
+        </nav>
+        
+        <div class="canvas-wrapper">
+          <canvas id="mirrorBreakLazer" height="600px" width="600px" aria-label="אזור המשחק">
+          </canvas>
+        </div>
+        
+        <nav id="menu-right" class="side-menu" aria-label="תפריט ימין">
+          <button id="next" aria-label="דלג לשלב הבא" data-key="next">שלב הבא</button>
+          <button id="previous" aria-label="חזור לשלב הקודם" data-key="previous">שלב קודם</button>
+          <button id="soundToggle" aria-label="הפעל/כבה קול" data-key="soundOn">🔊 קול פועל</button>
+          <button id="speedToggle" aria-label="שינוי מהירות" data-key="speed">🚀 מהירות: רגיל</button>
+        </nav>
+      </div>
+      <div id="levelSelector">
+        <label for="levelSelect" data-key="levelSelect">בחירה מהירה של שלב:</label>
+        <select id="levelSelect" aria-label="בחר שלב">
+          <option value="0" data-key="level1">שלב 1</option>
+          <option value="1" data-key="level2">שלב 2</option>
+          <option value="2" data-key="level3">שלב 3</option>
+          <option value="3" data-key="level4">שלב 4</option>
+          <option value="4" data-key="level5">שלב 5</option>
+          <option value="5" data-key="level6">שלב 6</option>
+          <option value="6" data-key="level7">שלב 7</option>
+          <option value="7" data-key="level8">שלב 8</option>
+        </select>
+      </div>
+    </section>
+  </main>
   
   <!-- Instructions Modal -->
-  <div id="instructionsModal" class="modal">
+  <div id="instructionsModal" class="modal" role="dialog" aria-labelledby="instructionsTitle" aria-hidden="true">
     <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2>How to Play Mirror Lazer Break</h2>
+      <span class="close" aria-label="סגור">&times;</span>
+      <h2 id="instructionsTitle">איך לשחק Mirror Lazer Break</h2>
       <div class="instructions">
-        <p><strong>Objective:</strong> Guide the laser beam to hit the spaceship target!</p>
-        <p><strong>Controls:</strong></p>
+        <p><strong>מטרה:</strong> הדריכו את קרן הלייזר לפגוע במטרת החללית!</p>
+        <p><strong>בקרה:</strong></p>
         <ul>
-          <li>Click on mirrors to rotate them and change laser direction</li>
-          <li>Use control buttons to start, pause, or reset the level</li>
-          <li>Avoid hitting planets (obstacles) or going off-screen</li>
+          <li>לחצו על המראות כדי לסובב אותן ולשנות את כיוון הלייזר</li>
+          <li>השתמשו בכפתורי הבקרה כדי להתחיל, לעצור או לאפס את השלב</li>
+          <li>הימנעו מפגיעה בכוכבי לכת (מכשולים) או מיציאה מהמסך</li>
         </ul>
-        <p><strong>Game Elements:</strong></p>
+        <p><strong>רכיבי המשחק:</strong></p>
         <ul>
-          <li>🚀 <strong>Spaceship:</strong> Your target - hit it to win!</li>
-          <li>⚡ <strong>Laser:</strong> Follows a straight path until it hits something</li>
-          <li>🪐 <strong>Planets:</strong> Obstacles that end the game if hit</li>
-          <li>🪞 <strong>Mirrors:</strong> Click to rotate and redirect the laser</li>
-          <li>🔴 <strong>Moving Obstacles:</strong> Dangerous moving spheres (Level 6+)</li>
-          <li>❤️ <strong>Life Power-up:</strong> Grants an extra life (Level 3+)</li>
-          <li>⭐ <strong>Score Power-up:</strong> Bonus points (Level 3+)</li>
-          <li>⏰ <strong>Slow Power-up:</strong> Slows moving obstacles (Level 3+)</li>
+          <li>🚀 <strong>חללית:</strong> המטרה שלכם - פגעו בה כדי לנצח!</li>
+          <li>⚡ <strong>לייזר:</strong> עוקב אחר נתיב ישר עד שהוא פוגע במשהו</li>
+          <li>🪐 <strong>כוכבי לכת:</strong> מכשולים שמסיימים את המשחק אם פוגעים בהם</li>
+          <li>🪞 <strong>מראות:</strong> לחצו כדי לסובב ולהפנות מחדש את הלייזר</li>
+          <li>🔴 <strong>מכשולים נעים:</strong> כדורים נעים מסוכנים (שלב 6+)</li>
+          <li>❤️ <strong>חיים נוספים:</strong> מענק חיים נוספים (שלב 3+)</li>
+          <li>⭐ <strong>ניקוד בונוס:</strong> נקודות בונוס (שלב 3+)</li>
+          <li>⏰ <strong>האטה:</strong> מאט מכשולים נעים (שלב 3+)</li>
         </ul>
-        <p><strong>Scoring:</strong> Faster completion = higher score! Build streaks for bonus points!</p>
-        <p><strong>Keyboard Shortcuts:</strong> Space=Start/Pause | R=Reset | N=Next | P=Previous</p>
+        <p><strong>ניקוד:</strong> השלמה מהירה יותר = ניקוד גבוה יותר! בנו רצפים לנקודות בונוס!</p>
+        <p><strong>קיצורי מקלדת:</strong> רווח=התחל/עצור | R=אפס | N=הבא | P=קודם</p>
       </div>
     </div>
   </div>
   
-  <p>© 2019 Itamar Mizrahi All Rights Reserved</p>
+  <footer>
+    <p data-key="copyright">© 2019 איתמר מזרחי כל הזכויות שמורות</p>
+  </footer>
+  <script src="translations.js" type="module"></script>
   <script src="canvas.js" type="module"></script>
 </body>
 

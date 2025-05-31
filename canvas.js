@@ -4,8 +4,23 @@ import { ObliquelineRight } from './obliquelineRight.js';
 import { Spaceship } from './spaceship.js';
 import { Lazer } from './lazer.js';
 import { Levels } from './levels.js';
+import { LanguageManager } from './translations.js';
 
 window.onload = function () {
+    // Initialize language manager
+    const languageManager = new LanguageManager();
+    languageManager.updateUI();
+    languageManager.updateDocumentDirection();
+    
+    // Setup language selector
+    const languageSelect = document.getElementById('languageSelect');
+    languageSelect.value = languageManager.currentLanguage;
+    languageSelect.addEventListener('change', (e) => {
+        languageManager.setLanguage(e.target.value);
+        updateSoundToggleText(); // Update sound button text when language changes
+        updateSpeedToggleText(); // Update speed button text when language changes
+    });
+    
     const x = 60, y = 60;
     let indexLevel = 0;
     let lazerY = 0, lazerX = 0;
@@ -109,8 +124,38 @@ window.onload = function () {
     // Toggle sound on/off
     function toggleSound() {
         soundEnabled = !soundEnabled;
-        document.getElementById('soundToggle').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+        updateSoundToggleText();
         localStorage.setItem('soundEnabled', soundEnabled);
+    }
+    
+    // Update sound toggle button text based on current language
+    function updateSoundToggleText() {
+        const soundButton = document.getElementById('soundToggle');
+        if (soundButton) {
+            soundButton.textContent = soundEnabled ? 
+                languageManager.getText('soundOn') : 
+                languageManager.getText('soundOff');
+        }
+    }
+
+    // Toggle speed and update button text
+    function toggleSpeed() {
+        speedIndex = (speedIndex + 1) % speedValues.length;
+        speed = speedValues[speedIndex];
+        updateSpeedToggleText();
+        resetLevel(); // Reset level with new speed
+    }
+
+    // Update speed toggle button text based on current language and speed
+    function updateSpeedToggleText() {
+        const speedToggle = document.getElementById('speedToggle');
+        if (speedToggle) {
+            const currentLang = languageManager.currentLanguage;
+            const speedNames = ['slow', 'medium', 'fast']; // Translation keys
+            const speedName = languageManager.getText(speedNames[speedIndex]);
+            const speedLabel = languageManager.getText('speed');
+            speedToggle.textContent = `🚀 ${speedLabel} ${speedName}`;
+        }
     }
     
     let lazerObject = new Lazer();
@@ -125,6 +170,9 @@ window.onload = function () {
     let objectsPosition = [];
     let speedY = 0, speedX = 0;
     let speed = 5;
+    let speedIndex = 1; // 0 = slow (2), 1 = normal (5), 2 = fast (10)
+    const speedValues = [2, 5, 10];
+    const speedNames = ['איטי', 'רגיל', 'מהיר']; // Hebrew speed names
     let pressed = 0;
     let mirrorsPosLevel1 = [], mirrorsPosLevel2 = [], mirrorsPosLevel3 = [], mirrorsPosLevel4 = [];
     let planetsPosLevel1 = [], planetsPosLevel2 = [], planetsPosLevel3 = [], planetsPosLevel4 = [];
@@ -640,10 +688,8 @@ window.onload = function () {
     document.getElementById("next").onclick = function () { nextLevel() };
     document.getElementById("previous").onclick = function () { PreviousLevel() };
     document.getElementById("reset").onclick = function () { resetLevel() };
-    document.getElementById("speed1").onclick = function () { speed = 2; resetLevel() };
-    document.getElementById("speed2").onclick = function () { speed = 5; resetLevel() };
-    document.getElementById("speed3").onclick = function () { speed = 10; resetLevel() };
     document.getElementById("soundToggle").onclick = function () { toggleSound() };
+    document.getElementById("speedToggle").onclick = function () { toggleSpeed() };
     
     // Instructions modal functionality
     document.getElementById("instructions").onclick = function () {
@@ -703,7 +749,9 @@ window.onload = function () {
     updateUI();
     
     // Initialize sound toggle button text
-    document.getElementById('soundToggle').textContent = soundEnabled ? '🔊 Sound On' : '🔇 Sound Off';
+    updateSoundToggleText();
+    // Initialize speed toggle button text
+    updateSpeedToggleText();
     //-----------------------------------------------------------------------------------------
     function changeMirror(evt) {
         mousePos = getMousePos(evt);
