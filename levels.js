@@ -95,7 +95,7 @@ let levelArr=[
    }  
 };
 function r(num=4){
-   return Math.round(Math.random()+num)
+   return Math.round(Math.random()) + num;
 }
 
 /*                  try{

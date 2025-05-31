@@ -62,6 +62,8 @@ window.onload = function () {
                     lazerObject.create(ctx, j * x, i * y, speed * 5);
                     lazerX = j * x;
                     lazerY = i * y;
+                    speedX = 0;
+                    speedY = 0;
                     objectsPosition[i][j] = {
                         posX: j * x,
                         posY: i * y,
@@ -153,73 +155,65 @@ window.onload = function () {
 
     // -----------functions-to-buttons:---------------------------------------------------------------
     function start() {
+        let currentSpaceships, currentLazers, currentPlanets, currentMirrors;
+        
         if (indexLevel == 0) {
-            if (lazerX == spaceshipPosLevel1[1].posX && lazerY == spaceshipPosLevel1[1].posY) {
-                youWon();
-                return;
-            }
-            if (lazerY == lazerPosLevel1[0].posY && lazerX == lazerPosLevel1[0].posX) {
-                speedX = 0;
-                speedY = speed;
-            }
-            mirrorReact(mirrorsPosLevel1);
-            for (let i = 0; i < planetsPosLevel1.length; i++) {
-                if (lazerX == planetsPosLevel1[i].posX && lazerY == planetsPosLevel1[i].posY) {
-                    tryAgain();
-                    return;
-                }
-            }
+            currentSpaceships = spaceshipPosLevel1;
+            currentLazers = lazerPosLevel1;
+            currentPlanets = planetsPosLevel1;
+            currentMirrors = mirrorsPosLevel1;
+        } else if (indexLevel == 1) {
+            currentSpaceships = spaceshipPosLevel2;
+            currentLazers = lazerPosLevel2;
+            currentPlanets = planetsPosLevel2;
+            currentMirrors = mirrorsPosLevel2;
+        } else if (indexLevel == 2) {
+            currentSpaceships = spaceshipPosLevel3;
+            currentLazers = lazerPosLevel3;
+            currentPlanets = planetsPosLevel3;
+            currentMirrors = mirrorsPosLevel3;
+        } else if (indexLevel == 3) {
+            currentSpaceships = spaceshipPosLevel4;
+            currentLazers = lazerPosLevel4;
+            currentPlanets = planetsPosLevel4;
+            currentMirrors = mirrorsPosLevel4;
+        }
 
-        }
-        if (indexLevel == 1) {
-            if (lazerX == spaceshipPosLevel2[1].posX && lazerY == spaceshipPosLevel2[1].posY) {
+        // Check if laser hits any spaceship (target)
+        for (let i = 0; i < currentSpaceships.length; i++) {
+            if (lazerX == currentSpaceships[i].posX && lazerY == currentSpaceships[i].posY) {
                 youWon();
                 return;
             }
-            if (lazerY == lazerPosLevel2[0].posY && lazerX == lazerPosLevel2[0].posX) {
-                speedY = 0;
-                speedX = -speed;
-            }
-            mirrorReact(mirrorsPosLevel2);
-            for (let i = 0; i < planetsPosLevel2.length; i++) {
-                if (lazerX == planetsPosLevel2[i].posX && lazerY == planetsPosLevel2[i].posY) {
-                    tryAgain();
-                    return;
+        }
+
+        // Set initial laser direction based on level
+        if (currentLazers && currentLazers[0]) {
+            if (lazerY == currentLazers[0].posY && lazerX == currentLazers[0].posX) {
+                if (indexLevel == 0) {
+                    speedX = 0;
+                    speedY = speed;
+                } else if (indexLevel == 1) {
+                    speedY = 0;
+                    speedX = -speed;
+                } else if (indexLevel == 2) {
+                    speedY = 0;
+                    speedX = speed;
+                } else if (indexLevel == 3) {
+                    speedY = speed;
+                    speedX = 0;
                 }
             }
         }
-        if (indexLevel == 2) {
-            if (lazerX == spaceshipPosLevel3[0].posX && lazerY == spaceshipPosLevel3[0].posY) {
-                youWon();
+
+        // React to mirrors
+        mirrorReact(currentMirrors);
+        
+        // Check collision with planets
+        for (let i = 0; i < currentPlanets.length; i++) {
+            if (lazerX == currentPlanets[i].posX && lazerY == currentPlanets[i].posY) {
+                tryAgain();
                 return;
-            }
-            if (lazerY == lazerPosLevel3[0].posY && lazerX == lazerPosLevel3[0].posX) {
-                speedY = 0;
-                speedX = speed;
-            }
-            mirrorReact(mirrorsPosLevel3);
-            for (let i = 0; i < planetsPosLevel3.length; i++) {
-                if (lazerX == planetsPosLevel3[i].posX && lazerY == planetsPosLevel3[i].posY) {
-                    tryAgain();
-                    return;
-                }
-            }
-        }
-        if (indexLevel == 3) {
-            if (lazerX == spaceshipPosLevel4[0].posX && lazerY == spaceshipPosLevel4[0].posY) {
-                youWon();
-                return;
-            }
-            if (lazerY == lazerPosLevel4[0].posY && lazerX == lazerPosLevel4[0].posX) {
-                speedY = speed;
-                speedX = 0;
-            }
-            mirrorReact(mirrorsPosLevel4);
-            for (let i = 0; i < planetsPosLevel4.length; i++) {
-                if (lazerX == planetsPosLevel4[i].posX && lazerY == planetsPosLevel4[i].posY) {
-                    tryAgain();
-                    return;
-                }
             }
         }
         
